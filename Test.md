@@ -39,3 +39,10 @@ foobar
 # 2nd slide
 
 Split pages by horizontal ruler (`---`). It's very simple! :satisfied:
+
+
+---
+
+# 3rd slide
+
+Make another slide
