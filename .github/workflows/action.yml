@@ -25,7 +25,7 @@ jobs:
       run: npm install -g @marp-team/marp-cli@latest
 
     - name: Generate PPTX
-      run: npx @marp-team/marp-cli@latest slide-deck.md --pptx
+      run: npx @marp-team/marp-cli@latest Test.md --pptx
 
     - name: Upload PPTX as artifact
       uses: actions/upload-artifact@v2
