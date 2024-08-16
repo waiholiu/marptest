@@ -1,0 +1,34 @@
+name: Generate PPTX from Marp
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Marp CLI
+      run: npm install -g @marp-team/marp-cli@latest
+
+    - name: Generate PPTX
+      run: npx @marp-team/marp-cli@latest slide-deck.md --pptx
+
+    - name: Upload PPTX as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: slide-deck
+        path: slide-deck.pptx
