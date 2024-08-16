@@ -45,4 +45,6 @@ Split pages by horizontal ruler (`---`). It's very simple! :satisfied:
 
 # 3rd slide
 
-Make another slide
+Make a slide with a picture of a dog
+
+![bg right:40% 60%](https://th.bing.com/th/id/OIP.FNKgH-k3128Wir1n8xce9AHaFj?rs=1&pid=ImgDetMain)

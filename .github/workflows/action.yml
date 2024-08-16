@@ -1,4 +1,4 @@
-name: Generate and Publish PPTX from Marp
+name: Generate PPTX from Marp
 
 on:
   push:
@@ -27,23 +27,8 @@ jobs:
     - name: Generate PPTX
       run: npx @marp-team/marp-cli@latest Test.md --pptx
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    - name: Upload PPTX as artifact
+      uses: actions/upload-artifact@v2
       with:
-        tag_name: v1.0.0
-        release_name: Release v1.0.0
-        draft: false
-        prerelease: false
-
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Test.pptx
-        asset_name: Test.pptx
-        asset_content_type: application/vnd.openxmlformats-officedocument.presentationml.presentation
+        name: slide-deck
+        path: Test.pptx
