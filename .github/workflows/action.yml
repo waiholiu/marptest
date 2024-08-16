@@ -1,12 +1,12 @@
-name: Generate PPTX from Marp
+name: Generate and Publish PPTX from Marp
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '14'
 
     - name: Install Marp CLI
       run: npm install -g @marp-team/marp-cli@latest
@@ -27,8 +27,23 @@ jobs:
     - name: Generate PPTX
       run: npx @marp-team/marp-cli@latest Test.md --pptx
 
-    - name: Upload PPTX as artifact
-      uses: actions/upload-artifact@v2
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       with:
-        name: slide-deck
-        path: Test.pptx
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Test.pptx
+        asset_name: Test.pptx
+        asset_content_type: application/vnd.openxmlformats-officedocument.presentationml.presentation
